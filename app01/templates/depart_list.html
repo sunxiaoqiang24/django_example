@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                批量上传
+            </div>
+            <div class="panel-body">
+                <form method="post" enctype="multipart/form-data" action="/depart/multi/">
+                    {% csrf_token %}
+                    <div class="form-group col-xs-6">
+                        <input type="file" id="exampleInputFile" name="exc">
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-sm">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="margin: 10px 0">
+            <a class="btn btn-success" href="/depart/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                新建部门
+            </a>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                部门列表
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <th scope="row">{{ obj.id }}</th>
+                        <td>{{ obj.title }}</td>
+                        <td>
+                            <a href="/depart/{{ obj.id }}/edit/" class="btn btn-primary btn-xs">编辑</a>
+                            <a href="/depart/delete/?nid={{ obj.id }}" class="btn btn-danger btn-xs">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
